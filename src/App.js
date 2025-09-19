@@ -15,7 +15,7 @@ export default function App() {
     typingSound.current = new Audio(`${process.env.PUBLIC_URL}/sounds/typing.mp3`);
   }, []);
 
-  // Enable sound on first user interaction
+  // Enable sound after first user interaction
   useEffect(() => {
     const handleStart = () => setCanPlaySound(true);
     window.addEventListener("click", handleStart, { once: true });
@@ -57,6 +57,7 @@ export default function App() {
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-all">
         <Navbar dark={dark} setDark={setDark} />
         
+        {/* Hero Section */}
         <motion.section
           className="flex flex-col items-center justify-center h-screen text-center"
           initial={{ opacity: 0, y: 50 }}
@@ -69,6 +70,7 @@ export default function App() {
             className="w-60 h-60 rounded-full shadow-xl mb-6 border-4 border-blue-500"
           />
 
+          {/* Name Animation */}
           <motion.h1
             className="text-5xl font-bold"
             variants={container}
@@ -82,6 +84,7 @@ export default function App() {
             ))}
           </motion.h1>
 
+          {/* Subtitle Animation */}
           <motion.p
             className="mt-4 text-xl"
             variants={container}
@@ -97,6 +100,7 @@ export default function App() {
           </motion.p>
         </motion.section>
 
+        {/* Description Section */}
         <motion.section
           className="py-16 px-8 text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
@@ -114,7 +118,7 @@ export default function App() {
           </p>
         </motion.section>
 
-        <Skills />
+        <Skills canPlaySound={canPlaySound} />
         <Projects />
         <Contact />
       </div>
