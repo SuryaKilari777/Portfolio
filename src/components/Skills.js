@@ -18,14 +18,14 @@ export default function Skills() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const skillRefs = useRef([]);
   const roosterSound = useRef(null);
-  const [canPlaySound, setCanPlaySound] = useState(false); // allow play after first interaction
+  const [canPlaySound, setCanPlaySound] = useState(false);
 
-  // Initialize chick sound
+  // Initialize rooster sound
   useEffect(() => {
-    roosterSound.current = new Audio("/sounds/chicks.mp3");
+    roosterSound.current = new Audio(`${process.env.PUBLIC_URL}/sounds/rooster.mp3`);
   }, []);
 
-  // Enable sound on first user interaction
+  // Enable sound after first user interaction
   useEffect(() => {
     const handleStart = () => setCanPlaySound(true);
     window.addEventListener("click", handleStart, { once: true });
@@ -36,7 +36,7 @@ export default function Skills() {
     };
   }, []);
 
-  // Update rooster position and play sound
+  // Update rooster position & play sound
   useEffect(() => {
     const el = skillRefs.current[activeSkill];
     if (el) {
@@ -47,7 +47,6 @@ export default function Skills() {
         y: rect.top - parentRect.top - 40,
       });
 
-      // Play rooster sound only if user interacted
       if (canPlaySound && roosterSound.current) {
         roosterSound.current.currentTime = 0;
         roosterSound.current.play().catch(() => {});
@@ -90,7 +89,7 @@ export default function Skills() {
               onMouseEnter={() => setActiveSkill(idx)}
             >
               <img
-                src={skill.logo}
+                src={`${process.env.PUBLIC_URL}${skill.logo}`}
                 alt={skill.name}
                 className="w-12 h-12 object-contain mb-2"
               />
@@ -100,9 +99,8 @@ export default function Skills() {
             </motion.div>
           ))}
 
-          {/* Chick Toy */}
           <motion.img
-            src="/icons/chick.jpeg"
+            src={`${process.env.PUBLIC_URL}/icons/rooster.png`}
             alt="Rooster toy"
             className="absolute w-10 h-10"
             animate={{ x: pos.x, y: pos.y }}
