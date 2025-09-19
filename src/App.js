@@ -8,11 +8,11 @@ import Contact from "./components/Contact";
 export default function App() {
   const [dark, setDark] = useState(false);
   const typingSound = useRef(null);
-  const [canPlaySound, setCanPlaySound] = useState(false); // allow play after first interaction
+  const [canPlaySound, setCanPlaySound] = useState(false);
 
   // Initialize typing sound
   useEffect(() => {
-    typingSound.current = new Audio("/sounds/typing.mp3");
+    typingSound.current = new Audio(`${process.env.PUBLIC_URL}/sounds/typing.mp3`);
   }, []);
 
   // Enable sound on first user interaction
@@ -26,7 +26,6 @@ export default function App() {
     };
   }, []);
 
-  // Variants for letter-by-letter animation (slowed down)
   const container = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
@@ -41,8 +40,6 @@ export default function App() {
       opacity: 1, 
       y: 0, 
       transition: { duration: 0.3 },
-      // Play typing sound on each letter
-      // Only play if user interacted
       onUpdate: () => {
         if (canPlaySound && typingSound.current) {
           typingSound.current.currentTime = 0;
@@ -60,7 +57,6 @@ export default function App() {
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-all">
         <Navbar dark={dark} setDark={setDark} />
         
-        {/* Hero Section */}
         <motion.section
           className="flex flex-col items-center justify-center h-screen text-center"
           initial={{ opacity: 0, y: 50 }}
@@ -68,12 +64,11 @@ export default function App() {
           transition={{ duration: 1.2 }}
         >
           <img
-            src="/p.jpg"
+            src={`${process.env.PUBLIC_URL}/p.jpg`}
             alt="Surya"
             className="w-60 h-60 rounded-full shadow-xl mb-6 border-4 border-blue-500"
           />
 
-          {/* Name Animation */}
           <motion.h1
             className="text-5xl font-bold"
             variants={container}
@@ -87,7 +82,6 @@ export default function App() {
             ))}
           </motion.h1>
 
-          {/* Subtitle Animation */}
           <motion.p
             className="mt-4 text-xl"
             variants={container}
@@ -103,7 +97,6 @@ export default function App() {
           </motion.p>
         </motion.section>
 
-        {/* Description Section */}
         <motion.section
           className="py-16 px-8 text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
