@@ -13,27 +13,15 @@ const skills = [
   { name: "GitHub", logo: "/logos/github.png" },
 ];
 
-export default function Skills() {
+export default function Skills({ canPlaySound }) {
   const [activeSkill, setActiveSkill] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const skillRefs = useRef([]);
   const roosterSound = useRef(null);
-  const [canPlaySound, setCanPlaySound] = useState(false);
 
   // Initialize rooster sound
   useEffect(() => {
-    roosterSound.current = new Audio(`${process.env.PUBLIC_URL}/sounds/rooster.mp3`);
-  }, []);
-
-  // Enable sound after first user interaction
-  useEffect(() => {
-    const handleStart = () => setCanPlaySound(true);
-    window.addEventListener("click", handleStart, { once: true });
-    window.addEventListener("keydown", handleStart, { once: true });
-    return () => {
-      window.removeEventListener("click", handleStart);
-      window.removeEventListener("keydown", handleStart);
-    };
+    roosterSound.current = new Audio(`${process.env.PUBLIC_URL}/sounds/chicks.mp3`);
   }, []);
 
   // Update rooster position & play sound
@@ -99,8 +87,9 @@ export default function Skills() {
             </motion.div>
           ))}
 
+          {/* Chick Toy */}
           <motion.img
-            src={`${process.env.PUBLIC_URL}/icons/rooster.png`}
+            src={`${process.env.PUBLIC_URL}/icons/chick.jpeg`}
             alt="Rooster toy"
             className="absolute w-10 h-10"
             animate={{ x: pos.x, y: pos.y }}
